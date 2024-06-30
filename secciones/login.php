@@ -13,69 +13,7 @@
     </head>
 
     <body>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            width: 400px;
-            max-width: 100%;
-        }
-        .form-container {
-            padding: 30px;
-        }
-        .form-container h2 {
-            margin: 0 0 15px;
-            text-align: center;
-        }
-        .form-container input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .form-container button {
-            width: 100%;
-            padding: 10px;
-            background-color: #28a745;
-            border: none;
-            border-radius: 5px;
-            color: #fff;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .form-container button:hover {
-            background-color: #218838;
-        }
-        .toggle-link {
-            text-align: center;
-            margin-top: 15px;
-        }
-        .toggle-link a {
-            color: #007bff;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .forms {
-            display: flex;
-            justify-content: space-between;
-        }
-        .form {
-            width: 45%;
-        }
-    </style>
-    
+  
         <div class="container">
             <div class="form">
              <div class="form form-container">
