@@ -1,30 +1,34 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <title>login</title>
-        <!-- Required meta tags -->
-        <meta charset="utf-8" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-        />
+<?php
+$servername = "localhost"; // Dirección del servidor MySQL
+$username = "tu_usuario"; // Usuario de MySQL
+$password = "tu_contraseña"; // Contraseña de MySQL
+$dbname = "restaurantemagnament"; // Nombre de la base de datos
 
-       
-    </head>
+// Crear conexión
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    <body>
-  
-        <div class="container">
-            <div class="form">
-             <div class="form form-container">
-                <h2>Registrarse</h2>
-                <input type="text" placeholder="Nombre" required>
-                <input type="text" placeholder="Correo electrónico" required>
-                <input type="password" placeholder="Contraseña" required>
-                <button>Registrarse</button>
-            </div>
-            </div>
-        </div>    
-    </body>
-</html>
+// Verificar conexión
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
 
+// Obtener datos del formulario
+$username = $_POST['username'];
+$password = $_POST['password'];
+
+// Consulta SQL para verificar las credenciales
+$sql = "SELECT * FROM Usuarios WHERE username = ? AND password = MD5(?)";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("ss", $username, $password);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    echo "Login exitoso. Bienvenido, " . $username . "!";
+} else {
+    echo "Usuario o contraseña incorrectos.";
+}
+
+$stmt->close();
+$conn->close();
+?>
