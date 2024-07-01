@@ -1,6 +1,6 @@
 <?php
 $servername = "localhost"; // Dirección del servidor MySQL
-$username = "admin"; // Usuario de MySQL
+$username = "root"; // Usuario de MySQL
 $password = ""; // Contraseña de MySQL
 $dbname = "restaurantmagnament"; // Nombre de la base de datos
 

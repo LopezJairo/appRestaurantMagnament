@@ -1,8 +1,8 @@
 <?php
 $servername = "localhost"; // Dirección del servidor MySQL
-$username = "tu_usuario"; // Usuario de MySQL
-$password = "tu_contraseña"; // Contraseña de MySQL
-$dbname = "restaurantemagnament"; // Nombre de la base de datos
+$username = "root"; // Usuario de MySQL
+$password = ""; // Contraseña de MySQL
+$dbname = "restaurantmagnament"; // Nombre de la base de datos
 
 // Crear conexión
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -13,11 +13,11 @@ if ($conn->connect_error) {
 }
 
 // Obtener datos del formulario
-$username = $_POST['username'];
-$password = $_POST['password'];
+$username = $_POST['email_cliente'];
+$password = $_POST['contraseña'];
 
 // Consulta SQL para verificar las credenciales
-$sql = "SELECT * FROM Usuarios WHERE username = ? AND password = MD5(?)";
+$sql = "SELECT * FROM clientes WHERE email_cliente = ? AND password = MD5(?)";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ss", $username, $password);
 $stmt->execute();
