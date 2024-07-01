@@ -12,6 +12,10 @@ if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 
+// Variables para mensajes de error y éxito
+$mensaje = "";
+$error = false;
+
 // Obtener datos del formulario
 $nombre_cliente = $_POST['nombre_cliente'];
 $email_cliente = $_POST['email_cliente'];
@@ -44,10 +48,14 @@ if ($stmt_insertar->execute()) {
     exit(); // Asegura que no se ejecute más código después de la redirección
 } else {
     echo "Error al registrar. Inténtelo nuevamente.";
-    header("Location: registro.html");
-    exit(); // Asegura que no se ejecute más código después de la redirección
 }
 
 $stmt_insertar->close();
 $conn->close();
+
+// Si hay error, mostrar mensaje en la misma página
+if ($error) {
+    echo '<script>alert("' . $mensaje . '");</script>';
+    echo '<script>window.history.go(-1);</script>';
+    
 ?>
