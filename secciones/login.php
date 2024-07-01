@@ -22,8 +22,9 @@ if (!isset($email_cliente) || !isset($contraseña)) {
 }
 
 // Consulta SQL para verificar las credenciales
-$sql = "SELECT * FROM Clientes WHERE email_cliente = ? AND password = MD5(?)";
+$sql = "SELECT * FROM Clientes WHERE email_cliente = ? AND contraseña = MD5(?)";
 $stmt = $conn->prepare($sql);
+
 
 if ($stmt === false) {
     die("Error al preparar la consulta: " . $conn->error);
