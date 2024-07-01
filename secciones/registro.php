@@ -7,13 +7,19 @@ $dbname = "restaurantmagnament"; // Nombre de la base de datos
 // Crear conexión
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Verificar conexión
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
+// Verificar si se envió el formulario de registro
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Crear conexión
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Verificar conexión
+    if ($conn->connect_error) {
+        die("Conexión fallida: " . $conn->connect_error);
+    }
 }
 
 // Variables para mensajes de error y éxito
-$mensaje = "";
+$mensaje = "error de solicitud";
 $error = false;
 
 // Obtener datos del formulario
