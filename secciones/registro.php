@@ -44,6 +44,8 @@ if ($stmt_insertar->execute()) {
     exit(); // Asegura que no se ejecute más código después de la redirección
 } else {
     echo "Error al registrar. Inténtelo nuevamente.";
+    header("Location: registro.html");
+    exit(); // Asegura que no se ejecute más código después de la redirección
 }
 
 $stmt_insertar->close();
