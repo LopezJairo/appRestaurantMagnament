@@ -39,7 +39,9 @@ $stmt_insertar = $conn->prepare($sql_insertar);
 $stmt_insertar->bind_param("sss", $email_cliente, $nombre_cliente, $contraseña);
 
 if ($stmt_insertar->execute()) {
-    echo "Registro exitoso. Ahora puedes iniciar sesión.";
+    // Redirigir a la página de inicio de sesión
+    header("Location: login.html");
+    exit(); // Asegura que no se ejecute más código después de la redirección
 } else {
     echo "Error al registrar. Inténtelo nuevamente.";
 }
