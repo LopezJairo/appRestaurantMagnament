@@ -57,5 +57,5 @@ $conn->close();
 if ($error) {
     echo '<script>alert("' . $mensaje . '");</script>';
     echo '<script>window.history.go(-1);</script>';
-    
+}
 ?>
