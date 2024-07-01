@@ -41,27 +41,32 @@ $result_verificar = $stmt_verificar->get_result();
 
 if ($result_verificar->num_rows > 0) {
     die("El email ya está registrado. Intente con otro email.");
+    $error = true;
+}else {
+    // Insertar nuevo cliente en la tabla Clientes
+    $sql_insertar = "INSERT INTO Clientes (email_cliente, nombre_cliente, contraseña) VALUES (?, ?, MD5(?))";
+    $stmt_insertar = $conn->prepare($sql_insertar);
+    $stmt_insertar->bind_param("sss", $email_cliente, $nombre_cliente, $contraseña);
+
+    if ($stmt_insertar->execute()) {
+        $mensaje = "Registro exitoso. Ahora puedes iniciar sesión.";
+    } else {
+        $mensaje = "Error al registrar. Inténtelo nuevamente.";
+        $error = true;
+    }
+
+    $stmt_insertar->close();
 }
 
-// Insertar nuevo cliente en la tabla Clientes
-$sql_insertar = "INSERT INTO Clientes (email_cliente, nombre_cliente, contraseña) VALUES (?, ?, MD5(?))";
-$stmt_insertar = $conn->prepare($sql_insertar);
-$stmt_insertar->bind_param("sss", $email_cliente, $nombre_cliente, $contraseña);
+$stmt_verificar->close();
 
-if ($stmt_insertar->execute()) {
-    // Redirigir a la página de inicio de sesión
-    header("Location: login.html");
-    exit(); // Asegura que no se ejecute más código después de la redirección
-} else {
-    echo "Error al registrar. Inténtelo nuevamente.";
-}
+// Cerrar conexión
 
-$stmt_insertar->close();
 $conn->close();
 
 // Si hay error, mostrar mensaje en la misma página
 if ($error) {
-    echo '<script>alert("' . $mensaje . '");</script>';
-    echo '<script>window.history.go(-1);</script>';
+echo '<script>alert("' . $mensaje . '");</script>';
+echo '<script>window.history.go(-1);</script>';
 }
 ?>
