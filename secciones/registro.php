@@ -1,26 +1,16 @@
 <?php
 $servername = "localhost"; // Dirección del servidor MySQL
-$username = "root"; // Usuario de MySQL (cámbialo a tu usuario real)
-$password = ""; // Contraseña de MySQL (cámbialo a tu contraseña real)
+$username = "root"; // Usuario de MySQL
+$password = ""; // Contraseña de MySQL
 $dbname = "restaurantmagnament"; // Nombre de la base de datos
 
 // Crear conexión
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Verificar si se envió el formulario de registro
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Crear conexión
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Verificar conexión
-    if ($conn->connect_error) {
-        die("Conexión fallida: " . $conn->connect_error);
-    }
+// Verificar conexión
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
 }
-
-// Variables para mensajes de error y éxito
-$mensaje = "error de solicitud";
-$error = false;
 
 // Obtener datos del formulario
 $nombre_cliente = $_POST['nombre_cliente'];
@@ -29,7 +19,9 @@ $contraseña = $_POST['contraseña'];
 
 // Verificar que los datos fueron enviados
 if (!isset($nombre_cliente) || !isset($email_cliente) || !isset($contraseña)) {
-    die("Por favor, complete todos los campos del formulario.");
+    echo "Por favor, complete todos los campos del formulario.";
+    echo '<br><a href="registro.html">Volver</a>';
+    exit();
 }
 
 // Verificar si el email ya está registrado
@@ -40,33 +32,25 @@ $stmt_verificar->execute();
 $result_verificar = $stmt_verificar->get_result();
 
 if ($result_verificar->num_rows > 0) {
-    die("El email ya está registrado. Intente con otro email.");
-    $error = true;
-}else {
-    // Insertar nuevo cliente en la tabla Clientes
-    $sql_insertar = "INSERT INTO Clientes (email_cliente, nombre_cliente, contraseña) VALUES (?, ?, MD5(?))";
-    $stmt_insertar = $conn->prepare($sql_insertar);
-    $stmt_insertar->bind_param("sss", $email_cliente, $nombre_cliente, $contraseña);
-
-    if ($stmt_insertar->execute()) {
-        $mensaje = "Registro exitoso. Ahora puedes iniciar sesión.";
-    } else {
-        $mensaje = "Error al registrar. Inténtelo nuevamente.";
-        $error = true;
-    }
-
-    $stmt_insertar->close();
+    echo "El email ya está registrado. Intente con otro email.";
+    echo '<br><a href="registro.html">Volver</a>';
+    exit();
 }
 
-$stmt_verificar->close();
+// Insertar nuevo cliente en la tabla Clientes
+$sql_insertar = "INSERT INTO Clientes (email_cliente, nombre_cliente, contraseña) VALUES (?, ?, MD5(?))";
+$stmt_insertar = $conn->prepare($sql_insertar);
+$stmt_insertar->bind_param("sss", $email_cliente, $nombre_cliente, $contraseña);
 
-// Cerrar conexión
+if ($stmt_insertar->execute()) {
+    echo "Registro exitoso. Ahora puedes iniciar sesión.";
+    header("Location: login.html");
+    exit();
+} else {
+    echo "Error al registrar. Inténtelo nuevamente.";
+    echo '<br><a href="registro.html">Volver</a>';
+}
 
+$stmt_insertar->close();
 $conn->close();
-
-// Si hay error, mostrar mensaje en la misma página
-if ($error) {
-echo '<script>alert("' . $mensaje . '");</script>';
-echo '<script>window.history.go(-1);</script>';
-}
 ?>
