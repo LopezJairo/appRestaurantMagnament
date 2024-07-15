@@ -60,7 +60,9 @@ if ($stmt_insertar->execute()) {
     header("Location: iniciosesion.html");
     exit();
 } else {
-    echo "Error al registrar. Inténtelo nuevamente.";
+    // Mostrar el error de MySQL
+    echo "Error al registrar. Inténtelo nuevamente.<br>";
+    echo "Error: " . $stmt_insertar->error . "<br>";
     echo '<br><a href="registro.html">Volver</a>';
 }
 
