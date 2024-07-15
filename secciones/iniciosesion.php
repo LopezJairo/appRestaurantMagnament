@@ -38,6 +38,7 @@ if ($result->num_rows > 0) {
     echo "Login exitoso. Bienvenido, " . $email_cliente . "!";
 } else {
     echo "Usuario o contraseña incorrectos.";
+    echo '<br><a href="iniciosesion.html">Volver</a>';
 }
 
 $stmt->close();
