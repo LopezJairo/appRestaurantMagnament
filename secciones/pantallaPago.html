@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pantalla de Pago</title>
+</head>
+<body>
+    <a href="pantallaPedido.html">Atras</a>
+    <h2>Detalle del pedido</h2>
+    <table>
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio unitario</th>
+            <th>Total</th>
+        </tr>
+        <tr>
+            <td>Producto 1</td>
+            <td>2</td>
+            <td>$10.00</td>
+            <td>$20.00</td>
+        </tr>
+        <tr>
+            <td>Producto 2</td>
+            <td>1</td>
+            <td>$5.00</td>
+            <td>$5.00</td>
+        </tr>
+        <tr>
+            <td colspan="3">Total</td>
+            <td>$25.00</td>
+        </tr>
+    </table>
+    <h3>Pago</h3>
+    <form action="confirmarPago.html" method="post">
+        <label for="metodoPago">Método de pago:</label>
+        <select id="metodoPago" name="metodoPago">
+            <option value="tarjeta">Tarjeta de crédito</option>
+            <option value="transferencia">Transferencia bancaria</option>
+        </select>
+        <input type="submit" value="Confirmar Pago">
+        <input type="reset" value="Cancelar">
+    </form>
+</body>
